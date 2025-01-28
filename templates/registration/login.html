@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Login Page</title>
+{% endblock %}
+
+<!-- Style Block  -->
+ {% block style %}
+<style>
+
+.fullbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.signupbox {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .signupbox:hover {
+            transform: translateY(-10px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .inputbox {
+            margin-bottom: 20px;
+        }
+
+        .inputbox label {
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .inputtag {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f7f9fc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .inputtag:focus {
+            border-color: #007bff;
+        }
+
+        /* Gender dropdown style */
+        .gender-select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f7f9fc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* Submit button styles */
+        #submitbtn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitbtn:hover {
+            background-color: #0056b3;
+        }
+
+        .login {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .login a {
+            color: #007bff;
+            margin: auto;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .signupbox {
+                padding: 30px 20px;
+            }
+
+            .inputtag {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            /* Adjust the gender select dropdown on smaller screens */
+            .gender-select {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signupbox {
+                padding: 25px 15px;
+            }
+
+            .inputtag {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            /* Adjust the gender select dropdown on extra small screens */
+            .gender-select {
+                padding: 10px;
+            }
+        }
+</style>
+ {% endblock %}
+
+ <!-- Content Block  -->
+  {% block content %}
+  <div class="fullbox">
+
+  <div class="signupbox">
+    <h2>Login</h2>
+    <form class="signupform" method="post">
+        {% csrf_token %}
+        <!-- Username -->
+        <div class="inputbox">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="inputtag" name="username" required>
+        </div>
+
+       
+        <!-- Password -->
+        <div class="inputbox">
+            <label for="password">Password</label>
+            <input type="text" id="password" class="inputtag" name="password" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitbtn">Login</button>
+    </form>
+    <div class="login">
+        <a href="{% url 'signup' %}">Don't have an account.</a>
+    </div>
+</div>
+    
+</div>
+<hr>
+  {% endblock %}
+
+
+  <!-- Scripts Block  -->
+  {% block scripts %}
+
+  {% endblock %}

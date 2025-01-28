@@ -1,0 +1,234 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Notifications</title>
+{% endblock %}
+
+<!-- Style Block  -->
+{% block style %}
+<style>
+  /* General Styles */
+  :root {
+    --primary-color: #735da5;
+    --text-color: #333;
+    --background-color: #f3f3f3;
+    --white: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --font-size: 1rem;
+  }
+
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+
+  /* Header */
+  .header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.5rem;
+    box-shadow: 0 0.4rem 0.6rem var(--shadow-color);
+  }
+
+  /* Notification Container */
+  .notification-container {
+    max-width: 36rem;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  /* Notification Card */
+  .notification-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .profile-pic {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .notification-info {
+    flex: 1;
+  }
+
+  .notification-info p {
+    margin: 0;
+    font-size: var(--font-size);
+    word-wrap: break-word;
+  }
+
+  .notification-info span {
+    font-size: 0.85rem;
+    color: #888;
+    font-family: serif;
+  }
+
+  .action-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.25rem .5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .action-button:hover {
+    background-color: #5b4792;
+    transform: scale(1.1);
+    color: #fff;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    :root {
+      --font-size: 0.85rem;
+    }
+    .header {
+      font-size: 1.2rem;
+      padding: 1.5rem;
+    }
+
+    .notification-card {
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .profile-pic {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .header {
+      font-size: 1rem;
+      padding: 1rem;
+    }
+
+    .notification-card {
+      padding: 0.8rem;
+    }
+
+    .action-button {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+{% endblock %}
+
+<!-- Content Block  -->
+{% block logo %} Notification {% endblock %} {% block content %}
+<div class="notification-container">
+  <!-- Notification 1 -->
+  {% for note in notifications %}
+  {% if note.username != user.username %}
+  <div class="notification-card">
+    <div class="profile-pic">
+      {% if note.user.profile.p_image %}
+      <img
+        src="{{ note.user.profile.p_image.url }}"
+        alt="UserProfile"
+        class="profile-pic"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/profile.jpg' %}"
+        alt="UserProfile"
+        class="profile-pic"
+      />
+      {% endif %}
+    </div>
+    <div class="notification-info">
+      <p>
+        <strong>
+          {{ note.user.username }}
+        </strong>
+        {{ note.content }}
+      </p>
+      <span>{{ note.created_at|date:"d M H:i" }}</span>
+    </div>
+    {% if note.content == "joined our app" %}
+    <a href="{% url 'chatroom' note.id_number %}" class="action-button">Chat</a>
+    {% elif note.content == "posted a photo" %}
+    <a href="{% url 'postpage' note.id_number %}" class="action-button">View</a>
+    {% elif note.content == "liked a post" %}
+    <a href="{% url 'postpage' note.id_number %}" class="action-button">View</a>
+    {% elif note.content == "commented on a post" %}
+    <a href="{% url 'postpage' note.id_number %}" class="action-button">View</a>
+    {% elif note.content == "liked a video" %}
+    <a href="{% url 'videopage' note.id_number %}" class="action-button">View</a>
+    {% elif note.content == "commented on a video" %}
+    <a href="{% url 'videopage' note.id_number %}" class="action-button">View</a>
+    {% elif note.content == "upload a video" %}
+    <a href="{% url 'videopage' note.id_number %}" class="action-button">View</a>
+    {% else %}
+    <a href="{% url 'home' %}" class="action-button">Home</a>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+  <!-- Notification 2 -->
+  <!-- <div class="notification-card">
+            <div class="profile-pic"></div>
+            <div class="notification-info">
+                <p><strong>Jane Smith</strong> commented on your photo.</p>
+                <span>10 minutes ago</span>
+            </div>
+            <div class="action-button">Reply</div>
+        </div> -->
+
+  <!-- Notification 3 -->
+  <!-- <div class="notification-card">
+            <div class="profile-pic"></div>
+            <div class="notification-info">
+                <p><strong>Emily Johnson</strong> shared your post.</p>
+                <span>30 minutes ago</span>
+            </div>
+            <div class="action-button">View</div>
+        </div> -->
+</div>
+<hr />
+
+{% endblock %}
+
+<!-- Script Block -->
+ {% block script %}
+<script>
+
+</script>
+
+{% endblock %}

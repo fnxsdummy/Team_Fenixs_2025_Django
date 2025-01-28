@@ -1,0 +1,218 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Fenixs Dummy - About</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  text-align: center;
+  padding: 100px 20px;
+  color: #fff;
+  background: linear-gradient(135deg, #735da5, #452885);
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-title span {
+  color: #ffe600;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background: #ffe600;
+  color: #452885;
+  font-weight: 600;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+/* Background Animation */
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/diagmonds-light.png') repeat;
+  opacity: 0.1;
+  animation: scrollBackground 15s linear infinite;
+}
+
+@keyframes scrollBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+/* About Section */
+.about-section {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #735da5;
+  margin-bottom: 20px;
+}
+
+.about-description {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: #452885;
+  margin-bottom: 10px;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.footer {
+  background: #452885;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer .social-icons a {
+  margin: 0 10px;
+}
+
+.footer .social-icons img {
+  width: 24px;
+  transition: transform 0.3s ease;
+}
+
+.footer .social-icons img:hover {
+  transform: scale(1.2);
+}
+
+  </style>
+  {% endblock %}
+
+  <!-- Content Block  -->
+  
+  {% block content %}
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Hey! there i am <span>Fenixs Dummy</span></h1>
+      <p class="hero-description">The visionary leader of an unstoppable gaming squad. Fenixs combines strategic brilliance with unmatched gaming prowess, rallying a team that's redefining what it means to dominate the virtual battlefield. Whether it's leading clutch plays or fostering a spirit of camaraderie, Fenixs isn't just a gamer—he's the architect of victories and the heart of his gaming family.</p>
+      <a href="https://wa.me/917456872882/" class="cta-button">Connect</a>
+    </div>
+    <!-- <div class="background-animation"></div> -->
+  </header>
+
+  <!-- About Section -->
+  <main>
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2 class="section-title">About Team Fenixs</h2>
+        <p class="about-description">
+          Team Fenixs is a vibrant gaming community built for passionate players. From casual gaming to competitive battles, we bring gamers together to share, play, and thrive. As a team, we rise above challenges, turning every loss into a comeback story.
+        </p>
+        <div class="cards">
+          <div class="card" data-aos="fade-up">
+            <h3>Fenixs Slayer</h3>
+            <p>A master of game plans, they anticipate every move and ensure the team always stays two steps ahead.</p>
+          </div>
+          <div class="card" data-aos="fade-down">
+            <h3>Fenixs Alpha</h3>
+            <p>With precision and focus, they deliver game-winning moments and inspire excellence in every play.</p>
+          </div>
+          <div class="card" data-aos="fade-right">
+            <h3>Fenixs Hunter</h3>
+            <p>The heart of the team, their energy and encouragement keep everyone driven and united during even the toughest challenges.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% endblock %}
+
+  {% block script %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  // Cards animation delay
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.3}s`;
+    card.style.opacity = 0;
+    card.style.transform = "translateY(50px)";
+
+    setTimeout(() => {
+      card.style.opacity = 1;
+      card.style.transform = "translateY(0)";
+    }, index * 300);
+  });
+});
+
+  </script>
+  {% endblock %}

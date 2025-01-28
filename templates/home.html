@@ -1,0 +1,632 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Fenixs Dummy</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  /* Add your CSS styles here */
+  * {
+    box-sizing: border-box;
+  }
+  .mainbox {
+    padding: 10rem 0;
+    width: 100vw;
+    height: 100%;
+    background-color: rgb(250, 241, 252);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #admin-image {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    border: 0.4px solid black;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .text p {
+    padding: 20px;
+  }
+  .membercard {
+    width: 15rem;
+    height: 40rem;
+    border: 0.5px solid #777;
+    border-radius: 2px;
+    padding-bottom: 1rem;
+    background-color: #fff;
+    margin: 0.5rem;
+    transition: all ease 0.5s;
+  }
+  .membercard:hover {
+    border: 0.5px solid #333;
+    box-shadow: 0 0 20px #333;
+    transform: scale(1.01);
+  }
+  .membercard img {
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 768px) {
+    .mainbox {
+      flex-direction: column;
+      /* padding: 5rem 0.5rem; */
+      /* margin: 0; */
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    #admin-image {
+      width: 10rem;
+      height: 10rem;
+    }
+    .membercard {
+      width: 100%;
+      height: 100%;
+    }
+    .membercard img {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+  @media (max-height: 700px) {
+    .mainbox {
+      flex-direction: column;
+      padding-top: 1rem;
+    }
+    #admin-image {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+
+  .buttontwo {
+    --primary-color: #645bff;
+    --secondary-color: #fff;
+    --hover-color: #111;
+    --arrow-width: 10px;
+    --arrow-stroke: 2px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 20px;
+    color: var(--secondary-color);
+    padding: 1em 1.8em;
+    background: var(--primary-color);
+    display: flex;
+    transition: all ease 0.4s;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: bold;
+  }
+
+
+  .buttontwo .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttontwo .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: var(--primary-color);
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+  }
+
+  .buttontwo .arrow::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    border: solid var(--secondary-color);
+    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+    display: inline-block;
+    top: -3px;
+    right: 3px;
+    transition: 0.2s;
+    padding: 3px;
+    transform: rotate(-45deg);
+  }
+
+  .buttontwo:hover {
+    background-color: var(--hover-color);
+  }
+
+  .buttontwo:hover .arrow {
+    background: var(--secondary-color);
+  }
+
+  .buttontwo:hover .arrow:before {
+    right: 0;
+  }
+
+  .joincontent {
+    margin-top: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .joinbutton {
+    margin-top: 1rem;
+    background-color: #735da5; /* Green */
+    color: white; /* White */
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+  }
+
+  .post-container {
+    background-color: #fff;
+    width: fit-content;
+    max-width: 500px; /* Limit max width for larger screens */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+
+  /* Post Header */
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .username {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .location {
+    font-size: 12px;
+    color: #888;
+  }
+
+  /* Post Image */
+  .post-image {
+    width: 18rem;
+    height: 18rem;
+    object-fit: contain;
+  }
+
+  /* Post Footer */
+  .post-footer {
+    padding: 10px 15px;
+  }
+
+  .likes {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .hashtags {
+    color: #007bff;
+    font-size: 14px;
+  }
+
+  .comment-section {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+    border: 0.2px solid #fff;
+    padding-left: 4px;
+    border-radius: 2px;
+  }
+
+
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .post-container {
+      margin: 10px;
+      border-radius: 6px;
+    }
+
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+    }
+    .post-image {
+      width: 14rem;
+      height: 14rem;
+    }
+
+    .username {
+      font-size: 13px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 13px;
+    }
+    .buttontwo {
+      padding: 0.5em 0.9em;
+      border-radius: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-container {
+      margin: 5px;
+      border-radius: 5px;
+    }
+    .post-image {
+      width: 95vw;
+      height: 14rem;
+
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+    }
+
+    .username {
+      font-size: 12px;
+    }
+
+    .location {
+      font-size: 10px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 12px;
+    }
+  }
+  #likebutton {
+  color: #735da5;
+  border: none;
+  background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#unlikebutton {
+  color: #735da5;
+  border: none;
+  background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-delete-tag {
+    color: #735da5;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    border: 0.2px solid #fff;
+    transition: all ease 0.5s;
+    flex: content;
+    direction: rtl;
+  }
+
+  .edit-delete-tag span {
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
+
+<!-- Content Block  -->
+
+{% block content %}
+
+<div class="mainbox">
+  <div class="image">
+    <img
+      src="{% static 'images/admin.jpg' %}"
+      alt="Admin Image"
+      id="admin-image"
+    />
+  </div>
+  <div class="text">
+    <h1>Welcome to <span style="color: #735da5">Team Fenixs</span></h1>
+    <p style="text-wrap: wrap; max-width: 25rem; color: #222">
+      Hello I'm <span style="color: #735da5">Fenixs Dummy</span>, the leader of
+      Team Fenixs, a dedicated gaming team. We're all about teamwork, skill, and
+      pushing our limits in every game. Like a phoenix, we rise stronger from
+      every challenge. Ready to make our mark in the gaming world!
+    </p>
+    <div class="buttonone">
+      <button class="buttontwo" onclick="team()">
+        Learn More
+        <div class="arrow-wrapper">
+          <div class="arrow"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Posts -->
+<div
+  class="poststitle"
+  style="
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h2>Latest Posts</h2>
+</div>
+<div
+  class="homeposts"
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-around;
+    background-color: #eee;
+    align-items: center;
+  "
+>
+  {% for post in posts %}
+  <div class="post-container">
+    <!-- Header -->
+    <div class="post-header">
+      {% if post.user.profile.p_image %}
+      <img
+        src="{{ post.user.profile.p_image.url }}"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/profile.jpg' %}"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
+      {% endif %}
+      <div class="profile-details">
+        
+        {% if post.user.first_name %}
+        <span class="username">{{ post.user.first_name }} {{ post.user.last_name }} {% if post.user.is_superuser %}<i class="fa-solid fa-dragon"></i>{% elif post.user.is_staff %}<i class="fa-solid fa-bolt"></i>{% endif %}</span>
+        {% else %}
+        <span class="username">{{ post.user.username }} {% if post.user.is_superuser %}<i class="fa-solid fa-dragon"></i>{% elif post.user.is_staff %}<i class="fa-solid fa-bolt"></i>{% endif %}</span>
+        {% endif %} {% if post.location %}
+        <span class="location">{{ post.location }}</span>
+        {% else %}
+        <span class="location">Location</span>
+        {% endif %}
+      </div>
+      
+      {% if post.user == request.user %}
+      <div class="edit-delete-tag">
+        <span>
+        <a href="{% url 'editpost' post.id %}">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+      </span>
+      </div>
+      {% endif %}
+    </div>
+    <!-- Post Image -->
+    <img src="{{ post.img.url }}" alt="Post Image" class="post-image" />
+    <!-- Footer -->
+    <div class="post-footer">
+      <!-- Check if user has already liked the post -->
+      {% if post.id in liked_posts %}
+      <form action="{% url 'like_post' post.id %}" method="POST">
+        {% csrf_token %}
+          <button type="submit" id="unlikebutton"><i class="fa-solid fa-heart"></i></button>
+      </form>
+      {% else %}
+      <form action="{% url 'like_post' post.id %}" method="POST">
+        {% csrf_token %}
+          <button type="submit" id="likebutton"><i class="fa-regular fa-heart"></i></button>
+      </form>
+      {% endif %}
+      <!-- Check if user has already liked the post -->
+      <div class="likes">
+        <strong>{{ post.total_likes }}</strong> peoples like this post.
+      </div>
+      <div class="description">
+        {{ post.title }} <span class="hashtags"></span>...
+      </div>
+      <div class="comment-section"><a href="{% url 'postpage' post.id %}">Add a comment...</a></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Posts -->
+
+<!-- Team Join  -->
+
+<div
+  class="join"
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  "
+>
+  <div
+    class="title"
+    style="
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 0.5px solid #735da5;
+    "
+  >
+    <p
+      style="font-family: 'Courier New', Courier, monospace; font-size: 0.8rem"
+    >
+      If you want to join our team.
+    </p>
+    <h2 style="color: #735da5">Join Team Fenixs</h2>
+  </div>
+  <div
+    class="joinbox"
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+    "
+  >
+    <div class="joincontent">
+      <h3>Whatsapp Group</h3>
+      <p class="joinbutton join-group">Join</p>
+    </div>
+    <div class="joincontent">
+      <h3>Whatsapp Channel</h3>
+      <p class="joinbutton join-channel">Join</p>
+    </div>
+  </div>
+</div>
+<!-- Team Join  -->
+<hr />
+<!-- Team Members -->
+<div
+  class="teamtitle"
+  style="
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <h2
+    style="
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid #735da5;
+      color: #735da5;
+    "
+  >
+    Team Members
+  </h2>
+</div>
+<div
+  class="team-members"
+  style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  "
+>
+  {% for member in members %}
+  <div class="membercard">
+    <img src="{{ member.m_image.url }}" alt="Member" />
+    <h3 style="font-family: serif">{{ member.m_name }}</h3>
+    <p>{{ member.m_role }}</p>
+    <p style="padding: 0 1rem" class="text-desc">{{ member.m_description }}</p>
+    <span
+      ><a
+        href="{{ member.m_insta }}"
+        style="
+          text-decoration: none;
+          padding-bottom: 5px;
+          border-bottom: 0.5px solid #735da5;
+          color: #735da5;
+        "
+        >Instagram</a
+      ></span
+    >
+  </div>
+  {% endfor %}
+</div>
+
+<hr />
+
+<!-- Team Members -->
+
+{% endblock %}
+
+{% block script %}
+  <script>
+    function team() {
+      window.location.href = "{% url 'aboutteam' %}";
+    };
+
+    const group = document.querySelector('.join-group');
+    const channel = document.querySelector('.join-channel');
+
+    group.addEventListener('click', ()=>{
+      window.location.href = "https://chat.whatsapp.com/CY8zyX1RTEpCxHYqwUIODF";
+      group.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
+    });
+    
+    channel.addEventListener('click', ()=>{
+      window.location.href = "https://whatsapp.com/channel/0029VaAThnPGJP8GBsVTOG0R";
+      channel.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.5)";
+    });
+  </script>
+
+  {% endblock %}

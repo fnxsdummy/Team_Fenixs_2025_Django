@@ -1,0 +1,219 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>About Team</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, #735da5, #8c79d9);
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    animation: fadeInDown 2s ease-in-out;
+  }
+
+  .hero-title span {
+    color: #ffe600;
+  }
+
+  .hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: #ffe600;
+    color: #735da5;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    animation: bounce 2s infinite;
+    z-index: 100;
+  }
+
+  .cta-button:hover {
+    background: #fff;
+    color: #735da5;
+  }
+
+  /* About Section */
+  .about-section {
+    padding: 60px 20px;
+    background: #f9f9f9;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #735da5;
+    margin-bottom: 40px;
+  }
+
+  .about-description {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-section {
+      clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+    }
+  }
+
+  .feature-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .feature-card h3 {
+    color: #735da5;
+    margin-bottom: 10px;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Footer */
+  .footer {
+    background: #735da5;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* Keyframes */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+</style>
+{% endblock %}
+
+<!-- Content Block  -->
+{% block content %}
+<header class="hero-section">
+  <div class="container">
+    <h1 class="hero-title">
+      Uniting Gamers, Building Legends 🎮🔥<span>Team Fenixs</span>
+    </h1>
+    <p class="hero-description">
+      Welcome to Team Fenixs, a vibrant and thriving gaming community where
+      passion meets camaraderie! 🌟 Born from a shared love for gaming and a
+      relentless drive to excel, Team Fenixs is more than just a group - we're a
+      family of gamers united by our dedication, skill, and determination to
+      conquer virtual worlds together.
+    </p>
+    <a href="{% url 'aboutme' %}" class="cta-button">About Leader</a>
+  </div>
+</header>
+
+<main>
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2 class="section-title">Why Join Team Fenixs?</h2>
+      <p class="about-description">
+        At Team Fenixs, we believe gaming is more than just a hobby - it's a way
+        of life. We're here to connect players, create unforgettable memories,
+        and push the limits of what's possible in the gaming community. Whether
+        you're here to team up for a ranked match, learn new strategies, or just
+        hang out with like-minded enthusiasts, Team Fenixs is your home.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up">
+          <h3>Inclusive & Diverse</h3>
+          <p>
+            Players from all walks of life come together to share their love for
+            gaming in a welcoming, inclusive environment.
+          </p>
+        </div>
+        <div class="feature-card" data-aos="fade-down">
+          <h3>Competitive Spirit</h3>
+          <p>
+            Whether it's casual matches or high-stakes tournaments, we play to
+            win while having a blast.
+          </p>
+        </div>
+        <div class="feature-card" data-aos="fade-right">
+          <h3>Community-Driven</h3>
+          <p>
+            Built by gamers, for gamers. Your voice matters, and your skills
+            shine here.
+          </p>
+        </div>
+        <div class="feature-card" data-aos="fade-left">
+          <h3>Always Evolving</h3>
+          <p>
+            Like the phoenix in our name, we constantly rise to new challenges
+            and adapt to the ever-changing gaming landscape.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}
+
+<!-- Script Block  -->
+{% block script %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".feature-card");
+    cards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.2}s`;
+    });
+  });
+</script>
+{% endblock %}

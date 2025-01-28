@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>SignUp Page</title>
+{% endblock %}
+
+<!-- Style Block  -->
+ {% block style %}
+<style>
+
+.fullbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.signupbox {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .signupbox:hover {
+            transform: translateY(-10px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .inputbox {
+            margin-bottom: 20px;
+        }
+
+        .inputbox label {
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .inputtag {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f7f9fc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .inputtag:focus {
+            border-color: #007bff;
+        }
+
+        /* Gender dropdown style */
+        .gender-select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f7f9fc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* Submit button styles */
+        #submitbtn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitbtn:hover {
+            background-color: #0056b3;
+        }
+
+        .login {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .login a {
+            color: #007bff;
+            margin: auto;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .signupbox {
+                padding: 30px 20px;
+            }
+
+            .inputtag {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            /* Adjust the gender select dropdown on smaller screens */
+            .gender-select {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signupbox {
+                padding: 25px 15px;
+            }
+
+            .inputtag {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            /* Adjust the gender select dropdown on extra small screens */
+            .gender-select {
+                padding: 10px;
+            }
+        }
+</style>
+ {% endblock %}
+
+ <!-- Content Block  -->
+  {% block content %}
+  <div class="fullbox">
+
+  <div class="signupbox">
+    <h2>Create Account</h2>
+    <form class="signupform" method="post">
+        {% csrf_token %}
+        <!-- First Name -->
+        <div class="inputbox">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" class="inputtag" name="firstname" required>
+        </div>
+
+        <!-- Last Name -->
+        <div class="inputbox">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" class="inputtag" name="lastname" required>
+        </div>
+
+        <!-- Username -->
+        <div class="inputbox">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="inputtag" name="username" required>
+        </div>
+
+        <!-- Email -->
+        <div class="inputbox">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" class="inputtag" name="email" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="inputbox">
+            <label for="phonenumber">Phone</label>
+            <input type="tel" id="phonenumber" class="inputtag" name="phonenumber" required pattern="(\+\d{1,2}\s?)?(\()?(\d{3})(?(2)\))[-.\s]?\d{3}[-.\s]?\d{4}">
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="inputbox">
+            <label for="birthday">Date of Birth</label>
+            <input type="date" id="birthday" class="inputtag" name="birthday" required>
+        </div>
+
+        <!-- Gender -->
+        <div class="inputbox">
+            <label for="gender">Gender</label>
+            <select id="gender" class="gender-select" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <!-- Password -->
+        <div class="inputbox">
+            <label for="password">Password</label>
+            <input type="text" id="password" class="inputtag" name="password" required>
+        </div>
+
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitbtn">Sign Up</button>
+    </form>
+    <div class="login">
+        <a href="{% url 'login' %}">Already have an account.</a>
+    </div>
+</div>
+    
+</div>
+<hr>
+  {% endblock %}
+
+
+  <!-- Scripts Block  -->
+  {% block scripts %}
+
+  {% endblock %}

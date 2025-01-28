@@ -1,0 +1,268 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Edit Profile</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  .form-container {
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 15px auto;
+  }
+
+  .profileForm {
+    padding: 1rem;
+  }
+
+  .profile-photo-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .edit-label {
+    font-size: 14px;
+    color: #735da5;
+    margin-bottom: 5px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .photo-label {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .profile-photo-section img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #735da5;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .profile-photo-section img:hover {
+    transform: scale(1.1);
+  }
+
+  .profile-photo-section input {
+    display: none;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #735da5;
+    font-weight: bold;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  input:disabled {
+    background-color: #f0f0f0;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  button {
+    width: 90%;
+    padding: 10px;
+    background-color: #735da5;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #5a4791;
+  }
+
+  @media (max-width: 600px) {
+    .form-container {
+      padding: 15px;
+    }
+
+    button {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{% endblock %} {% block content %}
+<div class="form-container">
+  <form id="profileForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="profile-photo-section">
+      <label class="edit-label" for="profilePhoto">Edit Profile Pic</label>
+      <label class="photo-label" for="profilePhoto">
+        <img
+          id="profilePhotoPreview"
+          src="{{ profile.p_image.url }}"
+          alt="Profile Photo"
+        />
+        <input
+          type="file"
+          id="profilePhoto"
+          name="profilePhoto"
+          accept="image/*"
+          onchange="previewPhoto(event)"
+        />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        placeholder="Enter your first name"
+        {%
+        if
+        user.first_name
+        %}
+        value="{{ user.first_name }}"
+        {%
+        endif
+        %}
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        placeholder="Enter your last name"
+        {%
+        if
+        user.last_name
+        %}
+        value="{{ user.last_name }}"
+        {%
+        endif
+        %}
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        value="{{ user.email }}"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="userName">Username</label>
+      <input
+        type="text"
+        id="userName"
+        name="userName"
+        value="{{ user.username }}"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea
+        id="bio"
+        name="bio"
+        rows="4"
+        {%
+        if
+        profile.p_bio
+        %}
+        placeholder="{{ profile.p_bio }}"
+        {%
+        else
+        %}
+        placeholder="Write something about yourself..."
+        {%
+        endif
+        %}
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input
+        type="tel"
+        id="phoneNumber"
+        name="phoneNumber"
+        placeholder="Enter your phone number"
+        {%
+        if
+        profile.p_phone
+        %}
+        value="{{ profile.p_phone }}"
+        {%
+        endif
+        %}
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" {% if profile.p_birthday %}value="{{ profile.p_birthday|date:'Y-m-d' }}"{% endif %} name="dob" required />
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required>
+        <option value="" disabled  {% if profile.gender == 'Add your Gender' %} selected {% endif %}>Select your gender</option>
+        <option value="Male" {% if profile.gender == 'Male' %} selected {% endif %}>Male</option>
+        <option value="Female" {% if profile.gender == 'Female' %} selected {% endif %}>Female</option>
+        <option value="Other" {% if profile.gender == 'Other' %} selected {% endif %}>Other</option>
+      </select>
+    </div>
+
+    <button type="submit">Save Changes</button>
+  </form>
+</div>
+{% endblock %}
+
+<!-- Script Block  -->
+{% block script %}
+<script>
+  function previewPhoto(event) {
+    const photo = document.getElementById("profilePhotoPreview");
+    photo.src = URL.createObjectURL(event.target.files[0]);
+    photo.onload = () => URL.revokeObjectURL(photo.src);
+  }
+</script>
+{% endblock %}

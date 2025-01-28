@@ -1,0 +1,236 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>How To Use</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+   
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #735da5, #452885);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero-title span {
+  color: #ffe600;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+
+.cta-button {
+  background: #ffe600;
+  color: #452885;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+/* Background Animation */
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/cubes.png') repeat;
+  opacity: 0.05;
+  animation: moveBackground 10s linear infinite;
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+/* Steps Section */
+.steps-section {
+  background: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .steps-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        }
+}
+
+.step-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.step-card h3 {
+  font-size: 1.5rem;
+  color: #735da5;
+  margin-bottom: 10px;
+}
+
+.step-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.step-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.footer {
+  background: #452885;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+  </style>
+{% endblock %}
+
+<!-- Content Block  -->
+
+{% block content %}
+<!-- Hero Section -->
+<header class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">
+        How to Use <span>Team Fenixs</span>
+      </h1>
+      <p class="hero-description">
+        Follow these simple steps to get started with Team Fenixs and make the most out of your experience.
+      </p>
+      <a href="{% url 'login' %}" class="cta-button">Get Started</a>
+    </div>
+    <!-- <div class="background-animation"></div> -->
+  </header>
+
+  <!-- Steps Section -->
+  <section id="steps" class="steps-section">
+    <div class="container">
+      <h2>Steps to Use Our App</h2>
+      <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step-card" data-aos="slide-in">
+          <h3>Step 1: Create an Account</h3>
+          <p>
+            Start by signing up on Team Fenixs. Click on the "Sign Up" button on the homepage, fill in your details, and set up your account.
+          </p>
+        </div>
+        <!-- Step 2 -->
+        <div class="step-card" data-aos="zoom-in">
+          <h3>Step 2: Build Your Profile</h3>
+          <p>
+            Once signed in, head to your profile page. Add a profile picture, write a short bio, and share details about yourself with the community.
+          </p>
+        </div>
+        <!-- Step 3 -->
+        <div class="step-card" data-aos="fade-up">
+          <h3>Step 3: Explore the Community</h3>
+          <p>
+            Browse through posts, discover other users, and join conversations. Check out trending topics and get involved.
+          </p>
+        </div>
+        <!-- Step 4 -->
+        <div class="step-card" data-aos="fade-down">
+          <h3>Step 4: Chat with Others</h3>
+          <p>
+            Use the chat feature to connect with friends or meet new people. Share your thoughts, gaming strategies, or just have fun.
+          </p>
+        </div>
+        <!-- Step 5 -->
+        <div class="step-card" data-aos="flip-in">
+          <h3>Step 5: Share Your Moments</h3>
+          <p>
+            Upload photos and videos of your gaming adventures. Share your achievements and celebrate with your team.
+          </p>
+        </div>
+        <!-- Step 6 -->
+        <div class="step-card" data-aos="scale-in">
+          <h3>Step 6: Stay Updated</h3>
+          <p>
+            Get real-time notifications for likes, comments, and new posts. Stay connected with everything happening in the community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+<!-- Script Block -->
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  // Apply animations on scroll
+  const cards = document.querySelectorAll(".step-card");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  cards.forEach((card) => {
+    observer.observe(card);
+  });
+});
+
+  </script>
+{% endblock %}

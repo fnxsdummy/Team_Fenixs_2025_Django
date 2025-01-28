@@ -1,0 +1,315 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Admin Page</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  .total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px;
+    flex: 1 1 300px;
+    max-width: 400px;
+  }
+
+  .card h2 {
+    margin-bottom: 10px;
+    border-bottom: 0.5px solid black;
+  }
+
+  .user-list,
+  .post-list,
+  .comment-list,
+  .message-list,
+  .member-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  .user-list div,
+  .post-list div,
+  .comment-list div,
+  .message-list div,
+  .member-list div {
+    border: 0.5px solid rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .member-list div {
+    flex-direction: column;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    background: #867bbf;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  form select,
+  form button {
+    padding: 5px 10px;
+    margin-right: 10px;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  .post img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+
+  .member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .member img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  @media screen and (max-width: 768px) {
+    .dashboard {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 100%;
+      flex: 1;
+    }
+
+    .buttons {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    button {
+      width: normal;
+    }
+  }
+</style>
+
+{% endblock %}
+<!-- Content Block  -->
+{% block content %}
+{% if user.is_staff %}
+<div class="total">
+ 
+  <div class="dashboard">
+    <!-- Users Section -->
+    <div class="card">
+      <h2>Users</h2>
+      <div class="user-list">
+        {% for user in users %}
+        {% if not user.username == 'fnxsdummy' %}
+        <div>
+            {{ user.username }}
+            <div class="buttons">
+              <!-- MUTE USER BUTTON -->
+               {% if user.is_active %}
+              <a href="{% url 'muteuser' user.id %}">
+                <button style="background-color: red;"><i class="fa-solid fa-user-slash"></i></button>
+              </a>
+              {% else %}
+              <a href="{% url 'muteuser' user.id %}">
+                <button style="background-color: #735da5;"><i class="fa-solid fa-user"></i></button>
+              </a>
+               {% endif %}
+              <!-- DELETE USER BUTTON -->
+              <a href="{% url 'deleteuser' user.id %}">
+                <button><i class="fa-solid fa-trash"></i></button>
+              </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+      <h2>Users List</h2>
+      {% for user in users %}
+      <form method="post" action="{% url 'adminpage' user.id %}" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;">
+        {% csrf_token %}
+        <input type="text" name="usertag" class="usertag" value="{{ user.username }}" disabled style="width: 100%; text-align: center; padding: 5px 0; font-weight: 600;">
+        <button style="width: 50%;"><i class="fa-regular fa-square-check"></i></button>
+      </form>
+      {% endfor %}
+    </div>
+
+    <!-- Posts Section -->
+    <div class="card">
+      <h2>Posts</h2>
+      <div class="post-list">
+        <!-- START POST -->
+         {% for post in posts %}
+        <div class="post">
+          <img src="{{ post.img.url }}" alt="Post Image" />
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.description }}</p>
+          <p><em>{{ post.location }}</em></p>
+          {% if not post.user.username == 'fnxsdummy' %}
+          <a href="{% url 'deletepost' post.id %}">
+            <button><i class="fa-solid fa-trash"></i></button>
+          </a>
+          {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+        <!-- END POST -->
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="card">
+      <h2>Comments</h2>
+      <div class="comment-list">
+        {% for comment in all_comments %}
+        <div>
+          <p class="m-text">{{ comment.content }}</p>
+          {% if not comment.user.username == 'fnxsdummy' %}
+          <a href="{% url 'deletecomment' comment.id %}">
+            <button><i class="fa-solid fa-trash"></i></button>
+          </a>
+          {% endif %}
+        </div>
+        <hr>
+        {% endfor %}  
+      </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div class="card">
+      <h2>Messages</h2>
+      <div class="message-list">
+        {% for message in groupmessages %}
+        <div>
+          <p class="m-text">{{ message.text }}</p>
+          {% if not message.user.username == 'fnxsdummy' %}
+          <a href="{% url 'deletemessage' message.id %}">
+            <button ><i class="fa-solid fa-trash"></i></button>
+          </a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Members Section -->
+    <div class="card">
+      <h2>Members <span style="float: right;"><a href="{% url 'addmember' %}" style="color: #735da5;"><i class="fa-solid fa-plus"></i></a></span></h2>
+      <div class="member-list">
+        {% for member in members %}
+        <div class="member">
+          <img src="{{ member.m_image.url }}" alt="Member Image" />
+          <div>
+            <strong>{{ member.m_name }}</strong> {{ member.m_role }}<br />
+            <p class="text-text" style="text-align: center;">{{ member.m_description }}</p>
+          </div>
+          {% if not member.m_role == 'Leader' %}
+          {% if not member.m_role == 'Co-Leader' %}
+          <a href="{% url 'deletemember' member.id %}" style="width: 100%; display: flex; align-items: center; justify-content: center;">
+            <button style="width: 50%; margin: auto;"><i class="fa-solid fa-trash"></i></button>
+          </a>
+          {% endif %}
+          {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div style="width: 100%; padding: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 15px;">
+  <h1>You are not authorized to access this page.</h1>
+  <a href="{% url 'home' %}">Back to home</a>
+</div>
+{% endif %}
+<hr>
+{% endblock %}
+<!-- End of Content Block  -->
+
+<!-- <script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                button.style.transform = 'scale(1.2)';
+            });
+
+            button.addEventListener('mouseout', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+    </script> -->
+
+    {% block script %}
+    <script>
+      const element = document.querySelectorAll('.text-text');
+      element.forEach(textElement => {
+
+        let words = textElement.textContent.split(" ");
+        if (words.length > 5) {
+          textElement.textContent = words.slice(0, 5).join(" ") + "...";
+        }
+      });
+      const element2 = document.querySelectorAll('.m-text');
+      element2.forEach(textElement => {
+
+        let words = textElement.textContent.split(" ");
+        if (words.length > 3) {
+          textElement.textContent = words.slice(0, 3).join(" ") + "...";
+        }
+      });
+
+    </script>
+    {% endblock %}

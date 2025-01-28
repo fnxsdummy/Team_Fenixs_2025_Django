@@ -1,0 +1,212 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Description</title>
+{% endblock %}
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  /* Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #735da5, #452885);
+    color: #fff;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .hero-title span {
+    color: #ffe600;
+  }
+
+  .hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #ffe600;
+    color: #452885;
+    font-weight: 600;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #fff;
+    transform: scale(1.1);
+  }
+
+  /* Features Section */
+  .features-section {
+    background: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    color: #735da5;
+    margin-bottom: 40px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  @media (max-width:768px) {
+    .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+  }
+
+  .feature-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-item h3 {
+    font-size: 1.5rem;
+    color: #452885;
+    margin-bottom: 10px;
+  }
+
+  .feature-item p {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Footer */
+  .footer {
+    background: #452885;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .footer span {
+    color: #ffe600;
+  }
+</style>
+{% endblock %}
+
+<!-- Content Block  -->
+{% block content %}
+<!-- Hero Section -->
+<header class="hero-section">
+  <div class="container">
+    <h1 class="hero-title">Welcome to <span>Team Fenixs</span></h1>
+    <p class="hero-description">
+      Team Fenixs is not just a website - it's a fun-packed community built
+      exclusively for gamers and friends to connect, share, and create amazing
+      memories together!
+    </p>
+    <a href="{% url 'howtouse' %}" class="cta-button">How To Use</a>
+  </div>
+</header>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+  <div class="container">
+    <h2 class="section-title">What Makes This App Special?</h2>
+    <div class="feature-grid">
+      <div class="feature-item" data-aos="fade-up">
+        <h3>Create Your Profile</h3>
+        <p>
+          Build a personal profile that reflects your unique identity. Add your
+          bio, upload a profile picture, and make yourself stand out in the
+          community.
+        </p>
+      </div>
+      <div class="feature-item" data-aos="fade-down">
+        <h3>Chat with Friends</h3>
+        <p>
+          Connect instantly with your team members or other users via the
+          integrated chat feature. Make conversations fun and lively with emojis
+          and attachments.
+        </p>
+      </div>
+      <div class="feature-item" data-aos="fade-right">
+        <h3>Share Photos and Videos</h3>
+        <p>
+          Upload and share your favorite photos and videos with your friends.
+          Showcase your gaming moments, funny clips, or team victories!
+        </p>
+      </div>
+      <div class="feature-item" data-aos="fade-left">
+        <h3>Engage with Posts</h3>
+        <p>
+          Like and comment on posts shared by others. Show appreciation and
+          share your thoughts on the latest updates from your team.
+        </p>
+      </div>
+      <div class="feature-item" data-aos="zoom-in">
+        <h3>Real-Time Notifications</h3>
+        <p>
+          Stay updated with instant notifications for likes, comments, and new
+          members joining the platform. Never miss a thing!
+        </p>
+      </div>
+      <div class="feature-item" data-aos="zoom-out">
+        <h3>Exclusive Features</h3>
+        <p>
+          Discover a variety of exciting features built exclusively for Team
+          Fenixs members - designed for collaboration and fun.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block script %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // AOS (Animate on Scroll) effect for grid items
+    const items = document.querySelectorAll(".feature-item");
+    items.forEach((item, index) => {
+      item.style.animationDelay = `${index * 0.2}s`;
+      item.style.opacity = 0;
+      item.style.transform = "translateY(50px)";
+
+      setTimeout(() => {
+        item.style.opacity = 1;
+        item.style.transform = "translateY(0)";
+      }, index * 200);
+    });
+  });
+</script>
+{% endblock %}

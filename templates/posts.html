@@ -1,0 +1,377 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Posts</title>
+{% endblock %}
+
+<!-- Style Block  -->
+{% block style %}
+<style>
+  .post-container {
+    background-color: #fff;
+    width: fit-content;
+    max-width: 500px; /* Limit max width for larger screens */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+
+  /* Post Header */
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+  }
+  .poststitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .username {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .location {
+    font-size: 12px;
+    color: #888;
+  }
+
+  /* Post Image */
+  .post-image {
+    width: 18rem;
+    height: 18rem;
+    object-fit: contain;
+  }
+
+  /* Post Footer */
+  .post-footer {
+    padding: 10px 15px;
+  }
+
+  .likes {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .hashtags {
+    color: #007bff;
+    font-size: 14px;
+    display: block;
+    text-wrap: wrap;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 15rem;
+
+  }
+
+  .comment-section {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+    border: 0.2px solid #fff;
+    padding-left: 4px;
+    border-radius: 2px;
+  }
+
+
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .post-container {
+      margin: 10px;
+      border-radius: 6px;
+    }
+
+    .post-image {
+      width: 12rem;
+      height: 12rem;
+      object-fit: contain;
+    }
+
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+    }
+
+    .username {
+      font-size: 13px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 13px;
+    }
+    .hashtags {
+      max-width: 10rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-container {
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+    }
+
+    .username {
+      font-size: 12px;
+    }
+
+    .location {
+      font-size: 10px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 12px;
+    }
+  }
+  #likebutton {
+    color: #735da5;
+    border: none;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #unlikebutton {
+    color: #735da5;
+    border: none;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .uploadbtn {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 6rem;
+    right: 1rem;
+    gap: 2px;
+  }
+  .uploadbtn button {
+    background-color: #eee;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    border: 0.5px solid #fff;
+    transition: all ease 0.5s;
+  }
+  .uploadbtn button:nth-child(1) {
+    z-index: 5;
+    color: #735da5;
+  }
+  .uploadbtn button:nth-child(2) {
+    position: relative;
+    top: -3rem;
+    z-index: 2;
+    color: #735da5;
+  }
+  .uploadbtn button:nth-child(3) {
+    position: relative;
+    top: -6rem;
+    z-index: 1;
+    color: #735da5;
+  }
+
+  .edit-delete-tag {
+    color: #735da5;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    border: 0.2px solid #fff;
+    transition: all ease 0.5s;
+    flex: content;
+    direction: rtl;
+  }
+
+  .edit-delete-tag span {
+    cursor: pointer;
+  }
+  
+</style>
+
+{% endblock %}
+
+<!-- Logo Block -->
+ {% block logo %}
+ Posts
+ {% endblock %}
+<!-- Logo Block -->
+
+<!-- Content Block  -->
+{% block content %}
+
+<!-- Posts -->
+<div class="poststitle" style="padding: 1rem">
+  <h3 style="width: fit-content">Add New</h3>
+  <!-- Load More Button -->
+  <div class="uploadbtn">
+    <button type="button"><i class="fa-solid fa-plus"></i></button>
+    <button type="button"><i class="fa-solid fa-film"></i></button>
+    <button type="button"><i class="fa-solid fa-image"></i></button>
+  </div>
+</div>
+<div
+  class="homeposts"
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-around;
+    background-color: #eee;
+    align-items: center;
+  "
+>
+  {% for post in posts %}
+  <div class="post-container">
+    <!-- Header -->
+    <div class="post-header">
+      {% if post.user.profile.p_image %}
+      <img
+        src="{{ post.user.profile.p_image.url }}"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/profile.jpg' %}"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
+      {% endif %}
+      <div class="profile-details">
+        {% if post.user.first_name %}
+        <span class="username"
+          >{{ post.user.first_name }} {{ post.user.last_name }} {% if post.user.is_superuser %}<i class="fa-solid fa-dragon"></i>{% elif post.user.is_staff %}<i class="fa-solid fa-bolt"></i>{% endif %}</span
+        >
+        {% else %}
+        <span class="username">{{ post.user.username }} {% if post.user.is_superuser %}<i class="fa-solid fa-dragon"></i>{% elif post.user.is_staff %}<i class="fa-solid fa-bolt"></i>{% endif %}</span>
+        {% endif %} {% if post.location %}
+        <span class="location">{{ post.location }}</span>
+        {% else %}
+        <span class="location">Location not provided</span>
+        {% endif %}
+      </div>
+      {% if post.user == request.user %}
+      <div class="edit-delete-tag">
+        <span>
+        <a href="{% url 'editpost' post.id %}">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+      </span>
+      </div>
+      {% endif %}
+    </div>
+    <!-- Post Image -->
+    <img src="{{ post.img.url }}" alt="Post Image" class="post-image" />
+    <!-- Footer -->
+    <div class="post-footer">
+      <!-- Check if user has already liked the post -->
+      {% if post.id in liked_posts %}
+      <form action="{% url 'like_post' post.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="unlikebutton">
+          <i class="fa-solid fa-heart"></i>
+        </button>
+      </form>
+      {% else %}
+      <form action="{% url 'like_post' post.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="likebutton">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </form>
+      {% endif %}
+      <!-- Check if user has already liked the post -->
+      <div class="likes">
+        <strong>{{ post.total_likes }}</strong> peoples like this post.
+      </div>
+      <div class="description">
+        {{ post.title }}
+        <span class="hashtags">#{{ post.description }}</span>
+      </div>
+      <div class="comment-section"><a href="{% url 'postpage' post.id %}">Add a comment...</a></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<hr />
+<!-- Posts -->
+
+{% endblock %} {% block script %}
+<script>
+  // Add your JavaScript code here
+  const btn1 = document.querySelector('.uploadbtn button:nth-child(1)');
+  const btn2 = document.querySelector('.uploadbtn button:nth-child(2)');
+  const btn3 = document.querySelector('.uploadbtn button:nth-child(3)');
+
+  btn1.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (btn2.style.top == '-3rem') {
+          btn2.style.top = '0rem';
+          btn3.style.top = '0rem';
+      }
+      else {
+          btn2.style.top = '-3rem';
+          btn3.style.top = '-6rem';
+
+      }
+  });
+  btn3.addEventListener('click', (event) => {
+      event.stopPropagation();
+      window.location.href = "{% url 'addphoto' %}";
+  });
+  btn2.addEventListener('click', (event) => {
+      event.stopPropagation();
+      window.location.href = "{% url 'addvideo' %}";
+  });
+</script>
+{% endblock %}

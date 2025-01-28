@@ -1,0 +1,149 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Add Member</title>
+{% endblock %}
+
+<!-- ---------------------------------------------------- -->
+
+<!-- Style Block  -->
+
+{% block style %}
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-foreground: #ffffff;
+    --muted-foreground: #6b7280;
+    --card: #ffffff;
+    --card-foreground: #1f2937;
+    --border: #d1d5db;
+  }
+
+  [data-theme="dark"] {
+    --card: #1f2937;
+    --card-foreground: #ffffff;
+    --primary: #818cf8;
+    --primary-foreground: #1e293b;
+    --muted-foreground: #9ca3af;
+    --border: #374151;
+  }
+
+  .container-first {
+    max-width: 28rem;
+    background-color: var(--card);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    color: var(--muted-foreground);
+    margin-bottom: 0.25rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    background-color: var(--card);
+    color: var(--card-foreground);
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: rgba(79, 70, 229, 0.8);
+  }
+</style>
+{% endblock %}
+<!-- Style Block  -->
+
+<!-- ---------------------------------------------------- -->
+
+<!-- Block Content -->
+{% block content %}
+
+<div class="container-first">
+  <h2>Add New Member</h2>
+  <p>New Member List Shown on Home Page.</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="file" id="image" accept="image/*" name="image" required />
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="role">Role</label>
+      <input type="text" id="role" placeholder="Role" name="role" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" id="description" placeholder="Description" name="description" required />
+    </div>
+    <div class="form-group">
+      <label for="instagram">Instagram Link</label>
+      <input type="text" id="instagram" placeholder="Instagram Link" name="instagram" required />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<hr>
+{% endblock %}
+<!-- Block Content -->
+
+<!-- ---------------------------------------------------- -->
+
+<!-- Script Block  -->
+{% block script %}
+<script>
+  // Your JavaScript goes here
+</script>
+{% endblock %}
+<!-- Script Block  -->
+
+<!-- End of File -->

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Profile-</title>
+
+{% endblock %}
+
+<!-- Style Block  -->
+ {% block style %}
+<style>
+
+</style>
+
+{% endblock %}
+
+<!-- Content Block  -->
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <h2>Are you sure want to logout.</h2>
+    </div>
+    <div>
+        <button type="submit">Logout</button>
+    </div>
+</form>
+
+{% endblock %}
+
+

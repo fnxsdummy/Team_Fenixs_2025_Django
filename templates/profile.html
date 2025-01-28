@@ -1,0 +1,521 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- Title Block  -->
+
+{% block title %}
+<title>Profile-{{ user.username }}</title>
+
+{% endblock %}
+
+<!-- Style Block  -->
+{% block style %}
+<style>
+  .profilebox {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  .profile {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    border-radius: 5px;
+  }
+  .dp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .dpimage {
+    height: 20rem;
+    width: 20rem;
+    margin: 2rem;
+    border-radius: 50%;
+    outline: 0.5px solid black;
+    object-fit: contain;
+    background-color: #fff;
+  }
+  .titlebar {
+    display: flex;
+    align-items: center;
+    padding: 5px 1rem;
+  }
+  h2.username {
+    font-size: 1rem;
+    margin: 0;
+    margin-left: 1rem;
+  }
+  .dropdown {
+    width: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .post {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .userphotos,
+  .uservideos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: auto;
+    margin: 0.5rem;
+  }
+
+  .photoimage {
+    height: 12rem;
+    width: 12rem;
+    margin: 0.5rem auto;
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: #fff;
+  }
+
+  .photouser {
+    padding: 0.2rem;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .phototitle {
+    padding: 0.2rem;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  .phototime {
+    padding: 0.2rem;
+    font-size: 0.6rem;
+    margin: 0;
+  }
+  .photobox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  .photodetails {
+    line-height: normal;
+    padding: 0;
+  }
+  .poststitle {
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0;
+    border-bottom: 0.5px solid black;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .poststitle h2 {
+    font-size: 1.5rem;
+    margin: auto;
+  }
+
+  .optionslist {
+    display: none;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    flex-direction: column;
+    width: fit-content;
+    position: relative;
+    padding-left: 1rem;
+    border-radius: 2px;
+    padding-right: 1rem;
+    margin-top: 2px;
+    left: -100%;
+    transition: all ease-in 0.5s;
+  }
+  .optionslist a {
+    font-size: 0.8rem;
+    text-decoration: none;
+    background: linear-gradient(to top, #eee, #fff);
+    width: 100%;
+    padding: 5px 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: "Courier New", Courier, monospace;
+    color: #222;
+  }
+  .optionslist a:hover {
+    background: linear-gradient(to top, #ccc, #ddd);
+    color: #007bff;
+    box-shadow: 0 0 3px black;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+    font-size: 1rem;
+    gap: 1px;
+    line-height: normal;
+  }
+
+  @media (max-width: 768px) {
+    .userphotos,
+    .uservideos {
+      justify-content: center;
+      align-items: center;
+    }
+    .profile {
+      grid-template-columns: 1fr;
+    }
+    .dpimage {
+      height: 6rem;
+      width: 6rem;
+      margin: 1rem;
+    }
+    .post {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .profilebox {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+    }
+  }
+
+  .post-container {
+    background-color: #fff;
+    width: fit-content;
+    max-width: 500px; /* Limit max width for larger screens */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+
+  /* Post Header */
+  .post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .username {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .location {
+    font-size: 12px;
+    color: #888;
+  }
+
+  /* Post Image */
+  .post-image {
+    width: 18rem;
+    height: 18rem;
+    object-fit: contain;
+  }
+
+  /* Post Footer */
+  .post-footer {
+    padding: 10px 15px;
+  }
+
+  .likes {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .hashtags {
+    color: #007bff;
+    font-size: 14px;
+  }
+
+  .comment-section {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+    border: 0.2px solid #fff;
+    padding-left: 4px;
+    border-radius: 2px;
+  }
+
+  .comment-section:hover {
+    border: 0.2px solid #999;
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .post-container {
+      margin: 10px;
+      border-radius: 6px;
+    }
+
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+    }
+    .post-image {
+      width: 14rem;
+      height: 14rem;
+    }
+
+    .username {
+      font-size: 13px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-container {
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    .profile-pic {
+      width: 30px;
+      height: 30px;
+    }
+
+    .username {
+      font-size: 12px;
+    }
+
+    .location {
+      font-size: 10px;
+    }
+
+    .likes,
+    .description,
+    .hashtags,
+    .comment-section {
+      font-size: 12px;
+    }
+  }
+  #likebutton {
+    color: #735da5;
+    border: none;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #unlikebutton {
+    color: #735da5;
+    border: none;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+{% endblock %}
+
+<!-- Content Block  -->
+
+{% block content %}
+
+<div class="profilebox">
+  <div class="profile" style="height: 100%">
+    <div class="left" style="height: 100%">
+      <div class="titlebar">
+        <div class="dropdown">
+          <i class="fa-solid fa-list"></i>
+        </div>
+        <h2 class="username">{{ user.username }} <span>{% if user.is_superuser %}<i class="fa-solid fa-dragon"></i>{% elif user.is_staff %}<i class="fa-solid fa-bolt"></i>{% endif %}</span></h2>
+      </div>
+      <div class="optionslist">
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'editprofile' info.id %}">Edit Profile</a>
+        <a href="{% url 'changepassword' %}">Change Password</a>
+      </div>
+      <div class="dp">
+        <img
+          src="{% if not info.p_image %}{% static 'images/profile.jpg' %}{% else %}{{ info.p_image.url }}{% endif %}"
+          alt="Profile Image"
+          class="dpimage"
+        />
+      </div>
+      <div class="info">
+        <p style="font-family: serif">
+          ⚡ {{ user.first_name }} {{ user.last_name }}
+        </p>
+        {% if user.email %}
+        <p style="font-family: serif">✉️ {{ user.email }}</p>
+        {% endif %} {% if info.p_gender %}
+        <p style="font-family: serif">👫🏻 {{ info.p_gender }}</p>
+        {% endif %} {% if info.p_phone %}
+        <p style="font-family: serif">📞 {{ info.p_phone }}</p>
+        {% endif %} {% if info.p_birthday %}
+        <p style="font-family: serif">🎂 {{ info.p_birthday }}</p>
+        {% endif %} {% if info.p_bio %}
+        <p style="text-wrap: wrap; width: 10rem">{{ info.p_bio }}</p>
+        {% endif %}
+      </div>
+      <div class="upload"></div>
+    </div>
+    <div class="right" style="height: 100%">
+      <div class="userposts">
+        <div class="poststitle">
+          <h2>Your Posts ({{ total }})</h2>
+        </div>
+        <div class="post">
+          <div class="userphotos">
+            {% for post in posts %}
+            <div class="post-container">
+              <!-- Header -->
+              <div class="post-header">
+                <div class="profile-details">
+                  {% if post.location %}
+                  <span class="location">{{ post.location }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- Post Image -->
+              <img
+                src="{{ post.img.url }}"
+                alt="Post Image"
+                class="post-image"
+              />
+              <!-- Footer -->
+              <div class="post-footer">
+                <div class="likes">
+                  <!-- Check if user has already liked the post -->
+                  {% if post.id in liked_posts %}
+                  <form action="{% url 'like_post' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="unlikebutton">
+                      <i class="fa-solid fa-heart"></i>
+                    </button>
+                  </form>
+                  {% else %}
+                  <form action="{% url 'like_post' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="likebutton">
+                      <i class="fa-regular fa-heart"></i>
+                    </button>
+                  </form>
+                  {% endif %}
+                  <!-- Check if user has already liked the post -->
+                  <strong>{{ post.total_likes }}</strong> peoples like this
+                  post.
+                </div>
+                <div class="description">
+                  {{ post.title }} <span class="hashtags"></span>...
+                </div>
+              </div>
+            </div>
+            {% endfor %} {% for video in videos %}
+            <div class="post-container">
+              <div class="post-header">
+                <div class="profile-details">
+                  {% if video.location %}
+                  <span class="location">{{ video.location }}</span>
+                  {% endif %}
+                </div>
+              </div>
+              <video
+                src="{{ video.video.url }}"
+                controls
+                class="post-image"
+              ></video>
+              <!-- Footer -->
+              <div class="post-footer">
+                <div class="likes">
+                  <!-- Check if user has already liked the post -->
+                  {% if video.id in liked_videos %}
+                  <form action="{% url 'like_video' video.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="unlikebutton"><i class="fa-solid fa-heart"></i></button>
+                  </form>
+                  {% else %}
+                  <form action="{% url 'like_video' video.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="likebutton"><i class="fa-regular fa-heart"></i></button>
+                  </form>
+                  {% endif %}
+                  <!-- Check if user has already liked the post -->
+                  <strong>{{ video.total_likes }}</strong> peoples like this
+                  post.
+                </div>
+                <div class="description">
+                  {{ video.title }} <span class="hashtags"></span>...
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+{% endblock %}
+
+<!-- Script Block  -->
+
+{% block script %}
+
+<script>
+  // Your JavaScript code here
+  const optionTrigger = document.querySelector(".dropdown");
+  const optionList = document.querySelector(".optionslist");
+
+  optionTrigger.addEventListener("click", () => {
+    if (optionList.style.left == "0%") {
+      optionList.style.left = "-100%";
+      optionList.style.display = "none";
+    } else {
+      optionList.style.display = "flex";
+      optionList.style.left = "0%";
+    }
+  });
+</script>
+{% endblock %}
